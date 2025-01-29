@@ -12,7 +12,7 @@ class NewTenant(Script):
         if not available_ips:
             self.log_error("No free IPs in that prefix.")
             return
-        num_to_display = min(data['count'], 30)
+        num_to_display = 30
         selected_ips = available_ips[:num_to_display]
 
         self.log_info(f"First {num_to_display} free IP addresses in {data['prefix']} prefix:")
