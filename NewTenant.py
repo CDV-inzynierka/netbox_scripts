@@ -4,11 +4,11 @@ from ipam.models import Prefix, IPAddress
 
 class RunCommand(Script):
     class Meta:
-        name = "todo"
+        name = "Create a new Tenant"
         description ="todo"
     prefix="100.64.0.0/10"
 
-    def run(self):
+    def run(self, data, commit):
         prefix_obj = Prefix.objects.get(prefix=data['prefix'])
         available_ips = prefix_obj.get_available_ips()
         for x in 20:
