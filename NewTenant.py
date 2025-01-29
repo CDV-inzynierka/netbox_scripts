@@ -1,16 +1,20 @@
-from extras.scripts import *
-from ipam.models import Prefix, IPAddress
+from extras.scripts import Script
+from ipam.models import Prefix
 
-
-class RunCommand(Script):
+class ListAvailableIPs(Script):
     class Meta:
         name = "Create a new Tenant"
-        description ="todo"
-    
+
 
     def run(self, data, commit):
-        prefix="100.64.0.0/10"
-        prefix_obj = Prefix.objects.get(prefix=prefix)
+        prefix_obj = Prefix.objects.get(prefix='100.64.0.0/10')        
         available_ips = prefix_obj.get_available_ips()
-        for x in 20:
-            print(available_ips[x])
+        if not available_ips:
+            self.log_error("No free IPs in that prefix.")
+            return
+        num_to_display = min(data['count'], 30)
+        selected_ips = available_ips[:num_to_display]
+
+        self.log_info(f"First {num_to_display} free IP addresses in {data['prefix']} prefix:")
+        for ip in selected_ips:
+            self.log_success(ip)
