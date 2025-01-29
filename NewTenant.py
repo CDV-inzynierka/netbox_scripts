@@ -1,7 +1,7 @@
 from extras.scripts import Script
 from ipam.models import Prefix
 
-class ListAvailableIPs(Script):
+class NewTenant(Script):
     class Meta:
         name = "Create a new Tenant"
 
