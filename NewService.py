@@ -1,11 +1,9 @@
 from extras.scripts import Script
 from ipam.models import Prefix
 
-class NewTenant(Script):
+class CreateNewService(Script):
     class Meta:
         name = "Create a new Tenant"
-
-
     def run(self, data, commit):
         prefix_obj = Prefix.objects.get(prefix='100.64.0.0/10')        
         available_ips = prefix_obj.get_available_ips()
