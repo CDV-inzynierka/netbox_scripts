@@ -1,7 +1,7 @@
 from extras.scripts import Script
 from ipam.models import Prefix
 
-class ListAvailableIPs(Script):
+class NewService(Script):
     class Meta:
         name = "List Available IPs from Fixed Prefix"
         description = "Lists the first 30 available IP addresses from the fixed prefix 100.64.0.0/10 without reservation."
