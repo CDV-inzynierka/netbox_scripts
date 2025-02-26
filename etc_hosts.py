@@ -47,7 +47,7 @@ class GetEtcHosts(Script):
     class Meta:
         name = "Generuj /etc/hosts"
         description = (
-            ""
+            "Skrypt generuje treść /etc/hosts, która jest wgrywana na lanmany."
         )
         scheduling_enabled = False
 
