@@ -1,3 +1,48 @@
+import sys
+
+from netdisco import *
+from juniper import *
+import device_utils
+import zabbix_utils
+import paramiko_rozne
+import edc
+
+
+# Obiekty netboxowe
+from extras.scripts import (
+    Script,
+    BooleanVar,
+    MultiObjectVar,
+    ChoiceVar,
+    IPAddressVar,
+    ObjectVar,
+    IntegerVar,
+    TextVar,
+    StringVar,
+)
+from ipam.models import *
+from ipam.choices import *
+from dcim.models import *
+from tenancy.models import Tenant
+
+
+import tempfile
+import os
+import re
+
+
+import yaml
+import json
+
+from netaddr import IPNetwork
+from django.utils.text import slugify
+from pyzabbix import ZabbixAPI
+from utilities.exceptions import AbortScript
+
+import datetime
+
+
+
 class GetEtcHosts(Script):
     class Meta:
         name = "Generuj /etc/hosts"
