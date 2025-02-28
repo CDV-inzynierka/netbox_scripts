@@ -21,11 +21,12 @@ class NewService(Script):
             ('17', '/17'),
             ('16', '/16')
         )
+        mask=ChoiceVar(choices=mask)
+
 
     def run(self, data, commit):
         prefix_obj=Prefix.objects.get(prefix="100.64.0.0/10")
         available_ip = prefix_obj.get_available_ips()
-        mask=ChoiceVar(choices=mask)
         self.log_success("Available IPs in master prefix:", str(available_ip))
         #if not available_ips:
         #    self.log_error("No available IP addresses in this prefix.")
