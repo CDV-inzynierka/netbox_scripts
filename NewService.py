@@ -64,8 +64,10 @@ class NewService(Script):
             if PrefixLengthFilter >= f.prefixlen:
                 ReservedPrefix=f
                 break
-                
+        if ReservedPrefix==None:
+            raise AbortScript(f"No free prefixes in master prefix") # type: ignore
         self.log_success(f"First available prefix with given mask: {ReservedPrefix}")
+
         
         #if not available_ips:
         #    self.log_error("No available IP addresses in this prefix.")
