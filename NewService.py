@@ -29,7 +29,7 @@ class NewService(Script):
         ('17', '/17'),
         ('16', '/16')
         ),
-        default='/29'
+        default='29'
     )
     CircuitSpeed = ChoiceVar(
         description = "Select a policer for new service",
@@ -52,7 +52,7 @@ class NewService(Script):
 
     def run(self, data, commit):
         PrefixObj=Prefix.objects.get(prefix=self.PARENT_PREFIX)
-        PrefixLengthFilter=int(data[str(self.PrefixLength)])
+        PrefixLengthFilter=int(data['PrefixLength'])
         AvailableIP = PrefixObj.get_available_prefixes().filter(prefix_length=PrefixLengthFilter).first()
 
         self.log_success("First available prefix with given mask:", str(AvailableIP))
