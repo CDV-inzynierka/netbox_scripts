@@ -29,7 +29,7 @@ class NewService(Script):
         ('17', '/17'),
         ('16', '/16')
         ),
-        default='29'
+        default='/29'
     )
     CircuitSpeed = ChoiceVar(
         description = "Select a policer for new service",
