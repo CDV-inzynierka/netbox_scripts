@@ -7,8 +7,10 @@ class NewService(Script):
         name = "List Available IPs from Fixed Prefix"
         description = "Lists the first available IP addresses from the fixed prefix 100.64.0.0/10 without reservation."
         scheduling_enabled = False
-    
-    mask =ChoiceVar(
+
+    PARENT_PREFIX="100.64.0.0/10"
+
+    PrefixLength = ChoiceVar(
         description = "Select a mask for new service",
         label = "Mask",
         choices=(
@@ -29,7 +31,7 @@ class NewService(Script):
         ),
         default='/29'
     )
-    speed =ChoiceVar(
+    CircuitSpeed = ChoiceVar(
         description = "Select a policer for new service",
         label = "Speed",
         choices=(
@@ -43,16 +45,16 @@ class NewService(Script):
         default='50'
     )
     Client = ObjectVar(
-        model = Tenant,
+        model = Tenant
 
     )
 
 
     def run(self, data, commit):
-        prefix_obj=Prefix.objects.get(prefix="100.64.0.0/10")
-        available_ip = prefix_obj.get_available_ips()
+        prefix_obj=Prefix.objects.get(prefix=self.PARENT_PREFIX)
+        available_ip = prefix_obj.get_first_available_prefix(self.PrefixLength)
 
-        self.log_success("Available IPs in master prefix:", str(available_ip))
+        self.log_success("First available prefix with given mask:", str(available_ip))
         
         #if not available_ips:
         #    self.log_error("No available IP addresses in this prefix.")
