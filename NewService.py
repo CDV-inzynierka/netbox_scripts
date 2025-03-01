@@ -52,11 +52,18 @@ class NewService(Script):
 
 
     def run(self, data, commit):
+        FreePrefix=[]
         PrefixObj = Prefix.objects.get(prefix=self.PARENT_PREFIX)
         PrefixLengthFilter = str(data['PrefixLength'])
         AvailablePrefixes = PrefixObj.get_available_prefixes()
-        
-        self.log_success(f"First available prefix with given mask: {AvailablePrefixes}")
+        for pref in AvailablePrefixes:
+            FreePrefix.append(pref)
+        for f in FreePrefix:
+            if PrefixLengthFilter >= f.prefixlen:
+                ReservedPrefix=f
+                break
+                
+        self.log_success(f"First available prefix with given mask: {ReservedPrefix}")
         
         #if not available_ips:
         #    self.log_error("No available IP addresses in this prefix.")
