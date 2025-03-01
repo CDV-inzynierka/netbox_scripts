@@ -14,20 +14,20 @@ class NewService(Script):
         description = "Select a mask for new service",
         label = "Mask",
         choices=(
-        ('/29', '/29'),
-        ('/28', '/28'),
-        ('/27', '/27'),
-        ('/26', '/26'),
-        ('/25', '/25'),
-        ('/24', '/24'),
-        ('/23', '/23'),
-        ('/22', '/22'),
-        ('/21', '/21'),
-        ('/20', '/20'),
-        ('/19', '/19'),
-        ('/18', '/18'),
-        ('/17', '/17'),
-        ('/16', '/16')
+        ('29', '/29'),
+        ('28', '/28'),
+        ('27', '/27'),
+        ('26', '/26'),
+        ('25', '/25'),
+        ('24', '/24'),
+        ('23', '/23'),
+        ('22', '/22'),
+        ('21', '/21'),
+        ('20', '/20'),
+        ('19', '/19'),
+        ('18', '/18'),
+        ('17', '/17'),
+        ('16', '/16')
         ),
         default='/29'
     )
@@ -52,7 +52,7 @@ class NewService(Script):
 
     def run(self, data, commit):
         PrefixObj=Prefix.objects.get(prefix=self.PARENT_PREFIX)
-        PrefixLengthFilter=int(data[self.PrefixLength])
+        PrefixLengthFilter=int(data[str(self.PrefixLength)])
         AvailableIP = PrefixObj.get_available_prefixes().filter(prefix_length=PrefixLengthFilter).first()
 
         self.log_success("First available prefix with given mask:", str(AvailableIP))
