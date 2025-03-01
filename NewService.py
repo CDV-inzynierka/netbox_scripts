@@ -6,6 +6,7 @@ class NewService(Script):
     class Meta:
         name = "List Available IPs from Fixed Prefix"
         description = "Lists the first available IP addresses from the fixed prefix 100.64.0.0/10 without reservation."
+        scheduling_enabled = False
     
     mask =ChoiceVar(
         description = "Select a mask for new service",
