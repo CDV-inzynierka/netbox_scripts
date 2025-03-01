@@ -1,6 +1,7 @@
 from extras.scripts import Script,ChoiceVar,ObjectVar
 from ipam.models import Prefix
 from tenancy.models import Tenant
+from ipaddress import ip_network, ip_address
 
 class NewService(Script):
     class Meta:
@@ -52,10 +53,10 @@ class NewService(Script):
 
     def run(self, data, commit):
         PrefixObj = Prefix.objects.get(prefix=self.PARENT_PREFIX)
-        PrefixLengthFilter = int(data['PrefixLength'])
-        AvailableIP = PrefixObj.get_available_prefixes()
-
-        self.log_success(f"First available prefix with given mask: {AvailableIP}")
+        PrefixLengthFilter = str(data['PrefixLength'])
+        AvailablePrefixes = PrefixObj.get_available_prefixes()
+        
+        self.log_success(f"First available prefix with given mask: {AvailablePrefixes}")
         
         #if not available_ips:
         #    self.log_error("No available IP addresses in this prefix.")
