@@ -1,5 +1,6 @@
-from extras.scripts import Script,ChoiceVar
+from extras.scripts import Script,ChoiceVar,ObjectVar
 from ipam.models import Prefix
+from tenancy.models import Tenant
 
 class NewService(Script):
     class Meta:
@@ -39,6 +40,10 @@ class NewService(Script):
         ('1000', '1 Gbps')
         ),
         default='50'
+    )
+    Client = ObjectVar(
+        model = Tenant,
+
     )
 
 
