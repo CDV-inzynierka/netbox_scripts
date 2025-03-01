@@ -1,7 +1,7 @@
 from extras.scripts import Script,ChoiceVar,ObjectVar
 from ipam.models import Prefix
 from tenancy.models import Tenant
-from ipaddress import ip_network, ip_address
+from ipaddress import ip_network
 
 class NewService(Script):
     class Meta:
@@ -12,23 +12,23 @@ class NewService(Script):
     PARENT_PREFIX="100.64.0.0/10"
 
     PrefixLength = ChoiceVar(
-        description = "Select a mask for new service",
+        description = "Select a mask for new service. Free addreses accounts in service needs of ISP (3 technical addresses).",
         label = "Mask",
         choices=(
-        ('29', '/29'),
-        ('28', '/28'),
-        ('27', '/27'),
-        ('26', '/26'),
-        ('25', '/25'),
-        ('24', '/24'),
-        ('23', '/23'),
-        ('22', '/22'),
-        ('21', '/21'),
-        ('20', '/20'),
-        ('19', '/19'),
-        ('18', '/18'),
-        ('17', '/17'),
-        ('16', '/16')
+        ('29', '/29 - 3 addresses'),
+        ('28', '/28 - 11 addresses'),
+        ('27', '/27 - 27 addresses'),
+        ('26', '/26 - 59 addresses'),
+        ('25', '/25 - 123 addresses'),
+        ('24', '/24 - 251 addresses'),
+        ('23', '/23 - 507 addresses'),
+        ('22', '/22 - 1019 addresses'),
+        ('21', '/21 - 2043 addreses'),
+        ('20', '/20 - 4091 addresses'),
+        ('19', '/19 - 8187 addreses'),
+        ('18', '/18 - 16379 addresses'),
+        ('17', '/17 - 32763 addresses'),
+        ('16', '/16 - 65531 addresses')
         ),
         default='29'
     )
@@ -56,9 +56,11 @@ class NewService(Script):
         PrefixObj = Prefix.objects.get(prefix=self.PARENT_PREFIX)
         PrefixLengthFilter = str(data['PrefixLength'])
         AvailablePrefixes = PrefixObj.get_available_prefixes()
-        for pref in AvailablePrefixes:
-            FreePrefix.append(pref)
+
+        FreePrefix = [str(ip) for ip in AvailablePrefixes.iter_cidrs()]
+
         for f in FreePrefix:
+            f=ip_network(f)
             if PrefixLengthFilter >= f.prefixlen:
                 ReservedPrefix=f
                 break
