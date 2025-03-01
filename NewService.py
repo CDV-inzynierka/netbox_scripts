@@ -52,8 +52,8 @@ class NewService(Script):
 
     def run(self, data, commit):
         PrefixObj=Prefix.objects.get(prefix=self.PARENT_PREFIX)
-        PrefixLenghtFilter=int(data[self.PrefixLenght])
-        AvailableIP = PrefixObj.get_available_prefixes().filter(prefix_length=PrefixLenghtFilter).first()
+        PrefixLengthFilter=int(data[self.PrefixLength])
+        AvailableIP = PrefixObj.get_available_prefixes().filter(prefix_length=PrefixLengthFilter).first()
 
         self.log_success("First available prefix with given mask:", str(AvailableIP))
         
