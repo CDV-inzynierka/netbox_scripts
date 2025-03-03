@@ -1,5 +1,5 @@
 from extras.scripts import Script,ChoiceVar,ObjectVar
-from ipam.models import Prefix, Role
+from ipam.models import Prefix, Role, VLAN, VLANGroup
 from tenancy.models import Tenant
 from netaddr import IPNetwork
 
@@ -71,7 +71,18 @@ class NewService(Script):
         
         #constructing prefix to reservation
         ReservedPrefix.prefixlen=PrefixLengthFilter
-        #creating Netbox object
+    
+        #creating Netbox VLAN object
+        new_vlan=VLAN(
+            id=VLANGroup.objects.get(name="Vlany Kliencie").get_next_available_vid(),
+            name="test-vlan",
+            role=Role.objects.get(name="Client"),
+            group=VLANGroup.objects.get(name="Vlany Kliencie"),
+            tenant=data["Client"]
+        )
+
+        new_vlan.save()
+        #creating Netbox Prefix object
         new_prefix=Prefix(
             prefix=ReservedPrefix, # type: ignore
             status="reserved",
