@@ -75,7 +75,7 @@ class NewService(Script):
         #creating Netbox VLAN object
         new_vlan=VLAN(
             vid=VLANGroup.objects.get(name="Vlany Kliencie").get_next_available_vid(),
-            name="test-vlan",
+            name="test-vlan2",
             role=Role.objects.get(name="Client"),
             group=VLANGroup.objects.get(name="Vlany Kliencie"),
             tenant=data["Client"]
