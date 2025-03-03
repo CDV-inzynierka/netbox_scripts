@@ -52,26 +52,33 @@ class NewService(Script):
 
 
     def run(self, data, commit):
+        #finding all avialable prefixes in master 100.64.0.0/10
         FreePrefix=[]
         PrefixObj = Prefix.objects.get(prefix=self.PARENT_PREFIX)
         PrefixLengthFilter = int(data['PrefixLength'])
         AvailablePrefixes = PrefixObj.get_available_prefixes()
 
+        #conversion to string
         FreePrefix = [str(ip) for ip in AvailablePrefixes.iter_cidrs()]
-
+        #checking if desired prefix lenght from ChoiceVar fits in any of free prefixes
         for f in FreePrefix:
             f=ip_network(f)
             if PrefixLengthFilter >= f.prefixlen:
                 ReservedPrefix=f
                 break
+        #raising exception if no free prefixes found
         if ReservedPrefix==None:
             raise AbortScript(f"No free prefixes in master prefix") # type: ignore
+        
+        new_prefix=Prefix(
+            prefix=ReservedPrefix,
+            status=PrefixStatusChoices.STATUS_RESERVED, # type: ignore
+            tenant=self.Client
+            
+        )
+        new_prefix.save()
+
+        
         self.log_success(f"First available prefix with given mask: {ReservedPrefix}")
 
         
-        #if not available_ips:
-        #    self.log_error("No available IP addresses in this prefix.")
-        #    return
-        #selected_ips = available_ips
-        #for ip in selected_ips:
-        #    self.log_success(str(ip))
