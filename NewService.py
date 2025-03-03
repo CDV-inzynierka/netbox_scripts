@@ -1,5 +1,5 @@
 from extras.scripts import Script,ChoiceVar,ObjectVar
-from ipam.models import Prefix
+from ipam.models import Prefix, Role
 from tenancy.models import Tenant
 from netaddr import IPNetwork
 
@@ -77,12 +77,10 @@ class NewService(Script):
             prefix=ReservedPrefix, # type: ignore
             status="reserved",
             tenant=data["Client"],
-            role="Client's service"
+            role=Role.objects.get(name="Client")
             
         )
         new_prefix.save()
 
         
         self.log_success(f"Succesfully reserved a prefix: {ReservedPrefix}")
-
-        
