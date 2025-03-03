@@ -87,7 +87,8 @@ class NewService(Script):
             prefix=ReservedPrefix, # type: ignore
             status="reserved",
             tenant=data["Client"],
-            role=Role.objects.get(name="Client")
+            role=Role.objects.get(name="Client"),
+            vlan=new_vlan
             
         )
         new_prefix.save()
