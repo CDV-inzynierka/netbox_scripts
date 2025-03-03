@@ -71,7 +71,7 @@ class NewService(Script):
             raise AbortScript(f"No free prefixes in master prefix") # type: ignore
         
         #constructing prefix to reservation
-        ReservedPrefix.netmask=PrefixLengthFilter
+        ReservedPrefix.prefixlen=PrefixLengthFilter
         #creating Netbox object
         new_prefix=Prefix(
             prefix=ReservedPrefix, # type: ignore
