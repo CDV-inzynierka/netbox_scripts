@@ -5,8 +5,8 @@ from netaddr import IPNetwork
 
 class NewService(Script):
     class Meta:
-        name = "List Available IPs from Fixed Prefix"
-        description = "Lists the first available IP addresses from the fixed prefix 100.64.0.0/10 without reservation."
+        name = "Create a service for client"
+        description = "Reserves a prefix for a new service from 100.64.0.0/10 range."
         scheduling_enabled = False
 
     PARENT_PREFIX="100.64.0.0/10"
@@ -59,17 +59,20 @@ class NewService(Script):
         AvailablePrefixes = PrefixObj.get_available_prefixes()
 
         #conversion to string
-        FreePrefix = [str(ip) for ip in AvailablePrefixes.iter_cidrs()]
+        FreeMasterPrefix = [str(ip) for ip in AvailablePrefixes.iter_cidrs()]
         #checking if desired prefix lenght from ChoiceVar fits in any of free prefixes
-        for f in FreePrefix:
+        for f in FreeMasterPrefix:
             f=IPNetwork(f)
             if PrefixLengthFilter >= f.prefixlen:
                 ReservedPrefix=f
                 break
         #raising exception if no free prefixes found
-        if ReservedPrefix==None:
+        if FreePrefix==None:
             raise AbortScript(f"No free prefixes in master prefix") # type: ignore
         
+        #constructing prefix to reservation
+        ReservedPrefix.netmask=PrefixLengthFilter
+        #creating Netbox object
         new_prefix=Prefix(
             prefix=ReservedPrefix, # type: ignore
             status="reserved",
@@ -79,6 +82,6 @@ class NewService(Script):
         new_prefix.save()
 
         
-        self.log_success(f"First available prefix with given mask: {ReservedPrefix}")
+        self.log_success(f"Succesfully reserved a prefix: {ReservedPrefix}")
 
         
