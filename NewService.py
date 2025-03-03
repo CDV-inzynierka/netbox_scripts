@@ -73,7 +73,7 @@ class NewService(Script):
         new_prefix=Prefix(
             prefix=ReservedPrefix,
             status="reserved",
-            tenant=self.Client
+            tenant=data["Client"]
             
         )
         new_prefix.save()
