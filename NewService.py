@@ -76,7 +76,8 @@ class NewService(Script):
         new_prefix=Prefix(
             prefix=ReservedPrefix, # type: ignore
             status="reserved",
-            tenant=data["Client"]
+            tenant=data["Client"],
+            role="Client's service"
             
         )
         new_prefix.save()
