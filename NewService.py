@@ -1,7 +1,6 @@
 from extras.scripts import Script,ChoiceVar,ObjectVar
 from ipam.models import Prefix
 from tenancy.models import Tenant
-from ipaddress import ip_network
 
 class NewService(Script):
     class Meta:
@@ -62,7 +61,7 @@ class NewService(Script):
         FreePrefix = [str(ip) for ip in AvailablePrefixes.iter_cidrs()]
         #checking if desired prefix lenght from ChoiceVar fits in any of free prefixes
         for f in FreePrefix:
-            f=ip_network(f)
+            f=IPNetwork(f) #type: ignore
             if PrefixLengthFilter >= f.prefixlen:
                 ReservedPrefix=f
                 break
@@ -71,7 +70,7 @@ class NewService(Script):
             raise AbortScript(f"No free prefixes in master prefix") # type: ignore
         
         new_prefix=Prefix(
-            prefix=IPNetwork(str(ReservedPrefix)), # type: ignore
+            prefix=(ReservedPrefix), # type: ignore
             status="reserved",
             tenant=data["Client"]
             
