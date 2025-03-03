@@ -71,7 +71,7 @@ class NewService(Script):
             raise AbortScript(f"No free prefixes in master prefix") # type: ignore
         
         new_prefix=Prefix(
-            prefix=ReservedPrefix,
+            prefix=IPNetwork(str(ReservedPrefix)), # type: ignore
             status="reserved",
             tenant=data["Client"]
             
