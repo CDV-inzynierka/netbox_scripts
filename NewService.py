@@ -72,7 +72,7 @@ class NewService(Script):
         
         new_prefix=Prefix(
             prefix=ReservedPrefix,
-            status=PrefixStatusChoices.STATUS_RESERVED, # type: ignore
+            status="reserved",
             tenant=self.Client
             
         )
