@@ -54,9 +54,8 @@ class NewService(Script):
     def run(self, data, commit):
         #finding all avialable prefixes in master 100.64.0.0/10
         FreePrefix=[]
-        PrefixObj = Prefix.objects.get(prefix=self.PARENT_PREFIX)
+        AvailablePrefixes = Prefix.objects.get(prefix=self.PARENT_PREFIX).get_available_prefixes()
         PrefixLengthFilter = int(data['PrefixLength'])
-        AvailablePrefixes = PrefixObj.get_available_prefixes()
 
         #conversion to string
         FreeMasterPrefix = [str(ip) for ip in AvailablePrefixes.iter_cidrs()]
