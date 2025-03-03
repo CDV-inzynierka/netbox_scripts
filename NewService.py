@@ -2,6 +2,8 @@ from extras.scripts import Script,ChoiceVar,ObjectVar
 from ipam.models import Prefix, Role, VLAN, VLANGroup
 from tenancy.models import Tenant
 from netaddr import IPNetwork
+import string
+import random
 
 class NewService(Script):
     class Meta:
@@ -71,11 +73,11 @@ class NewService(Script):
         
         #constructing prefix to reservation
         ReservedPrefix.prefixlen=PrefixLengthFilter
-    
+        characters=string.ascii_uppercase+string.digits
         #creating Netbox VLAN object
         new_vlan=VLAN(
             vid=VLANGroup.objects.get(name="Vlany Kliencie").get_next_available_vid(),
-            name="test-vlan2",
+            name="".join(random.choices(characters, k=5)),
             role=Role.objects.get(name="Client"),
             group=VLANGroup.objects.get(name="Vlany Kliencie"),
             tenant=data["Client"]
