@@ -34,18 +34,8 @@ class NewService(Script):
         ),
         default='29'
     )
-    CircuitSpeed = ChoiceVar(
-        description = "Select a policer for new service",
-        label = "Speed",
-        choices=(
-        ('50', '50 Mbps'),
-        ('100', '100 Mbps'),
-        ('200', '200 Mbps'),
-        ('300', '300 Mbps'),
-        ('500', '500 Mbps'),
-        ('1000', '1 Gbps')
-        ),
-        default='50'
+    CircuitSpeed = ObjectVar(
+        model=CustomFieldChoiceSet.objects.get(name="Speed") # type: ignore
     )
     Client = ObjectVar(
         model = Tenant
@@ -93,7 +83,8 @@ class NewService(Script):
             tenant=data["Client"],
             role=Role.objects.get(name="Client"),
             vlan=new_vlan,
-            description=Name
+            description=Name,
+            speed=self.CircuitSpeed
             
         )
         new_prefix.save()
