@@ -84,8 +84,8 @@ class NewService(Script):
             tenant=data["Client"],
             role=Role.objects.get(name="Client"),
             vlan=new_vlan,
-            description=Name,
-            speed=self.CircuitSpeed
+            description=Name#,
+           #speed=self.CircuitSpeed
             
         )
         new_prefix.save()
