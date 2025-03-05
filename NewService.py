@@ -1,4 +1,4 @@
-from extras.scripts import Script,ChoiceVar,ObjectVar, CustomField
+from extras.scripts import Script,ChoiceVar,ObjectVar, CustomField, CustomFieldChoiceSet
 from ipam.models import Prefix, Role, VLAN, VLANGroup
 from tenancy.models import Tenant
 from netaddr import IPNetwork
@@ -35,7 +35,8 @@ class NewService(Script):
         default='29'
     )
     CircuitSpeed = ChoiceVar(
-        choices=CustomField.objects.get(name="Speed").choices,
+        description="Select a policers for new service",
+        choices=CustomFieldChoiceSet.objects.get(name="Speed").choices,
         default='50'
     )
     Client = ObjectVar(
