@@ -1,6 +1,7 @@
 from extras.scripts import Script,ChoiceVar,ObjectVar
 from ipam.models import Prefix, Role, VLAN, VLANGroup
 from tenancy.models import Tenant
+from extras.models import CustomFieldChoiceSet
 from netaddr import IPNetwork
 import string
 import random
@@ -34,9 +35,14 @@ class NewService(Script):
         ),
         default='29'
     )
+    CircuitBandwidth=ChoiceVar(
+       description="Select a bandwidth for new service",
+       label = "Circuit bandwidth",
+       choices=CustomFieldChoiceSet.objects.get(name="Bandwidth").extra_choices,
+       default='50'
+    )
     Client = ObjectVar(
         model = Tenant
-
     )
 
 
@@ -72,6 +78,9 @@ class NewService(Script):
         )
 
         new_vlan.save()
+        self.log_success(f"Succesfully created a VLAN: {new_vlan.name} with ID: {new_vlan.vid}")
+
+        selected_bandwidth=data['CircuitBandwidth']
         #creating Netbox Prefix object
         new_prefix=Prefix(
             prefix=ReservedPrefix, # type: ignore
@@ -79,10 +88,11 @@ class NewService(Script):
             tenant=data["Client"],
             role=Role.objects.get(name="Client"),
             vlan=new_vlan,
-            description=Name
-            
+            description=Name,
+            custom_field_data={
+                'bandwidth': selected_bandwidth
+            }
         )
         new_prefix.save()
-
         
         self.log_success(f"Succesfully reserved a prefix: {ReservedPrefix}")
