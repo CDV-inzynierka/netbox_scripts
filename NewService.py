@@ -74,10 +74,11 @@ class NewService(Script):
         #constructing prefix to reservation
         ReservedPrefix.prefixlen=PrefixLengthFilter
         characters=string.ascii_uppercase+string.digits
+        Name="".join(random.choices(characters, k=5))
         #creating Netbox VLAN object
         new_vlan=VLAN(
             vid=VLANGroup.objects.get(name="Vlany Kliencie").get_next_available_vid(),
-            name="".join(random.choices(characters, k=5)),
+            name=Name,
             role=Role.objects.get(name="Client"),
             group=VLANGroup.objects.get(name="Vlany Kliencie"),
             tenant=data["Client"]
@@ -90,7 +91,8 @@ class NewService(Script):
             status="reserved",
             tenant=data["Client"],
             role=Role.objects.get(name="Client"),
-            vlan=new_vlan
+            vlan=new_vlan,
+            description=Name
             
         )
         new_prefix.save()
