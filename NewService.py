@@ -64,7 +64,6 @@ class NewService(Script):
         
         #constructing prefix to reservation
         ReservedPrefix.prefixlen=PrefixLengthFilter
-        #creating unique ID
         characters=string.ascii_uppercase+string.digits
         Name="".join(random.choices(characters, k=5))
         #creating Netbox VLAN object
