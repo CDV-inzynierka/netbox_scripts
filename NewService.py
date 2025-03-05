@@ -34,10 +34,10 @@ class NewService(Script):
         ),
         default='29'
     )
-    CircuitSpeed = ChoiceVar(
-        description="Select a policers for new service",
-        choices=CustomFieldChoiceSet.objects.get(name="Speed").choices
-    )
+  #  CircuitSpeed = ChoiceVar(
+   #     description="Select a policers for new service",
+   #     choices=CustomFieldChoiceSet.objects.get(name="Speed").choices
+    #)
     Client = ObjectVar(
         model = Tenant
 
