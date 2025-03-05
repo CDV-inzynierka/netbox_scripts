@@ -35,7 +35,7 @@ class NewService(Script):
         default='29'
     )
     CircuitSpeed = ObjectVar(
-        model=CustomFieldChoiceSet.objects.get(name="Speed") # type: ignore
+        model=CustomFieldChoiceSet # type: ignore
     )
     Client = ObjectVar(
         model = Tenant
