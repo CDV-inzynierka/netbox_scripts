@@ -12,7 +12,9 @@ class NewService(Script):
         description = "Deletes a service."
         scheduling_enabled = False
 
-
+    Client=ObjectVar(
+        model=Tenant
+    )
 
 
 
