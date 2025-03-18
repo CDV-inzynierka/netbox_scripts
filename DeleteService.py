@@ -13,8 +13,8 @@ class NewService(Script):
         scheduling_enabled = False
 
     Client = ChoiceVar(
+        model=Tenant,
         description = "Select a Client",
-        choices=Tenant.objects.all()
     )
 
 
