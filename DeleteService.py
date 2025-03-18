@@ -13,7 +13,17 @@ class NewService(Script):
         scheduling_enabled = False
 
     Client=ObjectVar(
-        model=Tenant
+        model=Tenant,
+        description = "Pick a client you would like to modify"
+    )
+    
+    Prefix=ObjectVar(
+        model = Prefix,
+        description = "Pick a prefix to delete",
+        query_params = {
+            'tenant_id__in': '$Client'
+        },
+        depends_on = ['Client']
     )
 
 
