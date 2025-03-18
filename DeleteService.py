@@ -1,7 +1,7 @@
 from extras.scripts import Script,ChoiceVar,ObjectVar
 from ipam.models import Prefix, Role, VLAN, VLANGroup
 from tenancy.models import Tenant
-from extras.models import CustomFieldChoiceSet
+from utilities.exceptions import AbortScript
 from netaddr import IPNetwork
 import string
 import random

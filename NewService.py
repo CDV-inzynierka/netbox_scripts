@@ -3,6 +3,7 @@ from ipam.models import Prefix, Role, VLAN, VLANGroup
 from tenancy.models import Tenant
 from extras.models import CustomFieldChoiceSet
 from netaddr import IPNetwork
+from utilities.exceptions import AbortScript
 import string
 import random
 
@@ -62,7 +63,7 @@ class NewService(Script):
                 break
         #raising exception if no free prefixes found
         if FreePrefix==None:
-            raise AbortScript(f"No free prefixes in master prefix") # type: ignore
+            raise AbortScript(f"No free prefixes in master prefix") 
         
         #constructing prefix to reservation
         ReservedPrefix.prefixlen=PrefixLengthFilter
