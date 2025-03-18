@@ -14,15 +14,16 @@ class NewService(Script):
 
     Client=ObjectVar(
         model=Tenant,
-        description = "Pick a client you would like to modify"
+        description = "Pick a client you would like to modify",
     )
     
     Prefix=ObjectVar(
         model = Prefix,
-        description = "Pick a prefix to delete",
+        label = "Service",
+        description = "Pick a service to delete",
         query_params = {
             'tenant_id': '$Client',
-            'role': 'client' #role Client in Prefixes
+            'role': 'client'
         }
     )
 
