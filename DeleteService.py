@@ -22,8 +22,7 @@ class NewService(Script):
         description = "Pick a prefix to delete",
         query_params = {
             'tenant_id__in': '$Client'
-        },
-        depends_on = ['Client']
+        }
     )
 
 
