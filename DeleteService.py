@@ -12,7 +12,7 @@ class NewService(Script):
         model=Tenant,
         description = "Pick a client you would like to modify",
         query_params={
-            'prefixes': None
+            'prefixes__empty': None
         }
     )
     
