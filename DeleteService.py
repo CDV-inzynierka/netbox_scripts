@@ -2,6 +2,7 @@ from extras.scripts import Script,ObjectVar
 from ipam.models import Prefix, VLAN
 from tenancy.models import Tenant
 from utilities.exceptions import AbortScript
+from django.db.models import Count
 
 class NewService(Script):
     class Meta:
@@ -12,6 +13,9 @@ class NewService(Script):
     Client=ObjectVar(
         model=Tenant,
         description = "Pick a client you would like to modify",
+        query_params={
+            'prefix__isnull': "False"
+        }
     )
     
     Prefix=ObjectVar(
