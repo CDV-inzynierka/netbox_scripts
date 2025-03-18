@@ -22,7 +22,7 @@ class NewService(Script):
         description = "Pick a prefix to delete",
         query_params = {
             'tenant_id': '$Client',
-            'role': 'Client'
+            'role__name': 'Client'
         }
     )
 
