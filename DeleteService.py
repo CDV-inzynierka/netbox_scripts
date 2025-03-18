@@ -1,10 +1,7 @@
-from extras.scripts import Script,ChoiceVar,ObjectVar
-from ipam.models import Prefix, Role, VLAN, VLANGroup
+from extras.scripts import Script,ObjectVar
+from ipam.models import Prefix, VLAN
 from tenancy.models import Tenant
 from utilities.exceptions import AbortScript
-from netaddr import IPNetwork
-import string
-import random
 
 class NewService(Script):
     class Meta:
