@@ -28,9 +28,8 @@ class NewService(Script):
 
     def run(self, data, commit):
         
-        TempPrefix=data['Prefix']
-        deleted_prefix=TempPrefix
-        deleted_vlan=VLAN.objects.get(name=TempPrefix.description)
+        deleted_prefix=data['Prefix']
+        deleted_vlan=VLAN.objects.get(name=deleted_prefix.description)
         try:
             deleted_prefix.delete()
             self.log_success(f"Succesfully deleted a prefix: {deleted_prefix.prefix}")
