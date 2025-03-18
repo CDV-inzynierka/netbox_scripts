@@ -11,9 +11,7 @@ class NewService(Script):
     Client=ObjectVar(
         model=Tenant,
         description = "Pick a client you would like to modify",
-        query_params={
-            'prefixes__empty': None
-        }
+        required = False
     )
     
     Prefix=ObjectVar(
