@@ -10,7 +10,7 @@ class NewService(Script):
         scheduling_enabled = False
     Client=ObjectVar(
         model=Tenant,
-        description = "Pick a client you would like to modify",
+        description = "Pick a client you would like to modify. That field only helps you to filter services attached to this client.",
         required = False
     )
     
