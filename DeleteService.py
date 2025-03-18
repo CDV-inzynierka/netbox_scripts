@@ -12,14 +12,9 @@ class NewService(Script):
         description = "Deletes a service."
         scheduling_enabled = False
 
-    Client = ObjectVar(
-        model = Tenant
-    )
-    CircuitBandwidth=ChoiceVar(
-       description="Select a bandwidth for new service",
-       label = "Circuit bandwidth",
-       choices=CustomFieldChoiceSet.objects.get(name="Bandwidth").extra_choices,
-       default='50'
+    Client = ChoiceVar(
+        description = "Select a Client",
+        choices=Tenant.objects.all()
     )
 
 
