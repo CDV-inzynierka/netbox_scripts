@@ -14,7 +14,7 @@ class NewService(Script):
 
     Client = ChoiceVar(
         model=Tenant,
-        description = "Select a Client",
+        description = "Select a Client"
     )
 
 
