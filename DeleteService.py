@@ -2,19 +2,17 @@ from extras.scripts import Script,ObjectVar
 from ipam.models import Prefix, VLAN
 from tenancy.models import Tenant
 from utilities.exceptions import AbortScript
-from django.db.models import Count
 
 class NewService(Script):
     class Meta:
         name = "Delete a service"
         description = "Deletes a service."
         scheduling_enabled = False
-
     Client=ObjectVar(
         model=Tenant,
         description = "Pick a client you would like to modify",
         query_params={
-            'prefixes__isnull': False
+            'prefixes': None
         }
     )
     
