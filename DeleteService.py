@@ -21,7 +21,7 @@ class NewService(Script):
         model = Prefix,
         description = "Pick a prefix to delete",
         query_params = {
-            'tenant_id__in': '$Client'
+            'tenant': '$Client'
         }
     )
 
