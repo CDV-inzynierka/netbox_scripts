@@ -9,7 +9,7 @@ import random
 class NewService(Script):
     class Meta:
         name = "Delete a service"
-        description = "Use this script to delete selected function."
+        description = "Deletes a service."
         scheduling_enabled = False
 
     Client = ObjectVar(

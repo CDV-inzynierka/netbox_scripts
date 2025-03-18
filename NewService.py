@@ -9,7 +9,7 @@ import random
 class NewService(Script):
     class Meta:
         name = "Create a service for client"
-        description = "Reserves a prefix for a new service from 100.64.0.0/10 range."
+        description = "Reserves a prefix for a new service from 100.64.0.0/10 range. Reserves a VLAN from pool dedicated for clients"
         scheduling_enabled = False
 
     PARENT_PREFIX="100.64.0.0/10"
