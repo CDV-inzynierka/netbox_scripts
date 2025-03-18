@@ -35,13 +35,14 @@ class NewService(Script):
         deleted_prefix=TempPrefix
         deleted_vlan=VLAN.objects.get(name=TempPrefix.description)
         try:
-            deleted_vlan.delete()
-            self.log_success(f"Succesfully deleted a VLAN: {deleted_vlan.name} with ID: {deleted_vlan.id}")
-        except Exception as e:
-            raise AbortScript(f"An error occured during deleting a vlan: {str(e)}") # type: ignore
-        try:
             deleted_prefix.delete()
             self.log_success(f"Succesfully deleted a prefix: {deleted_prefix.prefix}")
         except Exception as e:
             raise AbortScript(f"An error occured during deleting a prefix: {str(e)}") # type: ignore
+
+        try:
+            deleted_vlan.delete()
+            self.log_success(f"Succesfully deleted a VLAN: {deleted_vlan.name} with ID: {deleted_vlan.id}")
+        except Exception as e:
+            raise AbortScript(f"An error occured during deleting a vlan: {str(e)}") # type: ignore
 
