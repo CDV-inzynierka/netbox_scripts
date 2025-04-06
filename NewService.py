@@ -4,7 +4,7 @@ from tenancy.models import Tenant
 from extras.models import CustomFieldChoiceSet
 from netaddr import IPNetwork
 from utilities.exceptions import AbortScript
-from dcim.models import Devices, Interfaces
+from dcim.models import Device, Interfaces
 import string
 import random
 
@@ -48,7 +48,7 @@ class NewService(Script):
     )
 
     Switch=ObjectVar(
-        model=Devices,
+        model=Device,
         description = "Pick a switch you would like add interface to. That field only helps you to filter services attached to this switch",
         required = False,
         query_param={
