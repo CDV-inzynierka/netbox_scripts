@@ -49,10 +49,10 @@ class NewService(Script):
 
     Switch=ObjectVar(
         model=Device,
-        description = "Pick a switch you would like add interface to. That field only helps you to filter services attached to this switch",
+        description = "Pick a switch you would like add interface to. That field only helps you to filter interfaces attached to this switch",
         required = False,
         query_params={
-            'role': 'Switch Leaf'
+            'role': 'switch-leaf'
         }
     )
     
