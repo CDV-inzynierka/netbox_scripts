@@ -51,7 +51,7 @@ class NewService(Script):
         model=Device,
         description = "Pick a switch you would like add interface to. That field only helps you to filter services attached to this switch",
         required = False,
-        query_param={
+        query_params={
             'role': 'Switch Leaf'
         }
     )
