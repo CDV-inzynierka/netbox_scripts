@@ -17,7 +17,7 @@ class NewService(Script):
     PARENT_PREFIX="100.64.0.0/10"
 
     PrefixLength = ChoiceVar(
-        description = "Select a mask for new service. Free addreses accounts in service needs of ISP (3 technical addresses).",
+        description = "Select a mask for new service. Free addreses accounts in service needs of ISP (3 technical addresses)",
         label = "Mask",
         choices=(
         ('29', '/29 - 3 addresses'),
@@ -59,7 +59,7 @@ class NewService(Script):
     Interface=ObjectVar(
         model = Interface,
         label = "Interface",
-        description = "Pick an interface to which this service should be bound",
+        description = "Pick an interface to which this service should be bound. If desired port is not on the list, please check if it is not in use or lacks a Free Port tag",
         query_params = {
             'device_id': '$Switch',
             'tag': 'free-port'
