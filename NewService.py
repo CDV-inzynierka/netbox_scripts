@@ -136,4 +136,4 @@ class NewService(Script):
             raise AbortScript(f"An error occured during interface reservation: {str(e)}")
         #tagging outside of try block
         interface.tags.set(['Service port'])
-
+        interface.save()
