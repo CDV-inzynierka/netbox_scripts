@@ -37,9 +37,8 @@ class NewService(Script):
             raise AbortScript(f"An error occured during deleting a prefix: {str(e)}") # type: ignore
 
         try:
-            deleted_vlan_id=deleted_vlan.id
             deleted_vlan.delete()
-            self.log_success(f"Succesfully deleted a VLAN: {deleted_vlan.name} with ID: {str(deleted_vlan_id)}")
+            self.log_success(f"Succesfully deleted a VLAN: {deleted_vlan.name} with ID: {str(deleted_vlan.vid)}")
         except Exception as e:
             raise AbortScript(f"An error occured during deleting a vlan: {str(e)}") # type: ignore
 
