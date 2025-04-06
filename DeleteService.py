@@ -46,6 +46,7 @@ class NewService(Script):
                 raise AbortScript(f"An error occured during deleting a vlan: {str(e)}") 
 
             try:
+                self.log_debug(f"debug")
                 if unset_interface.pk and hasattr(Interface,'snapshot'):
                     unset_interface.snapshot()
 
