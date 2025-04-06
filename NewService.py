@@ -106,7 +106,7 @@ class NewService(Script):
         selected_bandwidth=data['CircuitBandwidth']
         #creating Netbox Prefix object
         new_prefix=Prefix(
-            prefix=ReservedPrefix, # type: ignore
+            prefix=ReservedPrefix,
             status="reserved",
             tenant=data["Client"],
             role=Role.objects.get(name="Client"),
@@ -129,7 +129,6 @@ class NewService(Script):
             interface.mode="access"
             interface.untagged_vlan=new_vlan
             interface.description=f"{Name}_{data['Client']}_{ReservedPrefix}_{selected_bandwidth}"
-            interface.tags.set(['Service port'])
             interface.full_clean()
             interface.save()
             self.log_success(f"Successfully bound a VLAN to interface: {interface.name}, {interface.device}")
