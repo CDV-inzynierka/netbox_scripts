@@ -51,10 +51,8 @@ class NewService(Script):
                     unset_interface.snapshot()
 
                 unset_interface.untagged_vlan=None
-                                
-
-                unset_interface.mode=None
-                unset_interface.description=None
+                unset_interface.mode=""
+                unset_interface.description=""
                 unset_interface.full_clean()
                 self.log_debug(f"debug")
                 unset_interface.save()
