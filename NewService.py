@@ -61,7 +61,8 @@ class NewService(Script):
         label = "Interface",
         description = "Pick an interface to which this service should be bound",
         query_params = {
-            'device_id': '$Switch'
+            'device_id': '$Switch',
+            'tag': 'free-port'
         }
     )
 
@@ -117,3 +118,4 @@ class NewService(Script):
         self.log_success(f"Succesfully reserved a prefix: {ReservedPrefix}")
 
         #interface reservation
+
