@@ -68,6 +68,8 @@ class NewService(Script):
 
 
     def run(self, data, commit):
+        interface=data['Interface']
+
         #finding all avialable prefixes in master 100.64.0.0/10
         FreePrefix=[]
         AvailablePrefixes = Prefix.objects.get(prefix=self.PARENT_PREFIX).get_available_prefixes()
@@ -118,4 +120,17 @@ class NewService(Script):
         self.log_success(f"Succesfully reserved a prefix: {ReservedPrefix}")
 
         #interface reservation
+        
+        #snapshot for data consistency and change logging
+        if interface.pk and hasattr(Interface,'snapshot'):
+            interface.snapshot()
+        #modifying Netbox Interface object to assign it to vlan
+        try:
+            interface.untagged_vlan=new_vlan
+            interface.full_clean()
+            interface.save()
+            self.log_success(f"Successfully bound a VLAN to interface: {interface.name}, {interface.device}")
+        except Exception as e:
+            raise AbortScript(f"An error occured during interface reservation")
+        
 
