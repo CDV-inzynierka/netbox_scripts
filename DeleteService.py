@@ -54,9 +54,8 @@ class NewService(Script):
                 unset_interface.mode=""
                 unset_interface.description=""
                 unset_interface.full_clean()
-                self.log_debug(f"debug")
                 unset_interface.save()
-                self.log_success(f"Interface {unset_interface.name} successfully unbound")
+                self.log_success(f"Interface {unset_interface.name}, {unset_interface.device} successfully unbound")
             except Exception as e:
                 raise AbortScript(f"An error occured during reconfiguring an interface: {str(e)}")
         except Exception as e:
