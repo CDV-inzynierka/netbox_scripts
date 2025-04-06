@@ -61,7 +61,7 @@ class NewService(Script):
         label = "Interface",
         description = "Pick an interface to which this service should be bound",
         query_params = {
-            'device': '$Switch'
+            'device_id': '$Switch'
         }
     )
 
