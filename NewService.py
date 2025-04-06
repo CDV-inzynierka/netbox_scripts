@@ -128,9 +128,9 @@ class NewService(Script):
         try:
             interface.mode="access"
             interface.untagged_vlan=new_vlan
-            #interface.description = f"{Name}_{data['Client']}_{ReservedPrefix}_{selected_bandwidth}"
-            #interface.tags.set(['Service port'])
+            interface.description = f"{Name}_{data['Client']}_{ReservedPrefix}_{selected_bandwidth}"
             interface.full_clean()
+            interface.tags.set(['Service port'])
             interface.save()
             self.log_success(f"Successfully bound a VLAN to interface: {interface.name}, {interface.device}")
         except Exception as e:
