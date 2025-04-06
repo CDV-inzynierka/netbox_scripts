@@ -51,11 +51,13 @@ class NewService(Script):
                     unset_interface.snapshot()
 
                 unset_interface.untagged_vlan=None
+                                
+
                 unset_interface.mode=None
                 unset_interface.description=None
                 unset_interface.full_clean()
-                unset_interface.save()
                 self.log_debug(f"debug")
+                unset_interface.save()
                 self.log_success(f"Interface {unset_interface.name} successfully unbound")
             except Exception as e:
                 raise AbortScript(f"An error occured during reconfiguring an interface: {str(e)}")
