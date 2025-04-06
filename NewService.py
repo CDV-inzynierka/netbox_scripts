@@ -134,5 +134,6 @@ class NewService(Script):
             self.log_success(f"Successfully bound a VLAN to interface: {interface.name}, {interface.device}")
         except Exception as e:
             raise AbortScript(f"An error occured during interface reservation: {str(e)}")
-        
+        #tagging outside of try block
+        interface.tags.set(['Service port'])
 
