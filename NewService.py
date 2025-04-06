@@ -128,7 +128,7 @@ class NewService(Script):
         try:
             interface.mode="access"
             interface.untagged_vlan=new_vlan
-            interface.description=Name+"_"+str(data["Client"])+"_"+ReservedPrefix+"_"+selected_bandwidth
+            interface.description=Name+"_"+str(data["Client"])+"_"+str(ReservedPrefix)+"_"+str(selected_bandwidth)
             interface.tag.set(['service-port'])
             interface.full_clean()
             interface.save()
