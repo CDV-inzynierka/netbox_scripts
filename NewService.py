@@ -4,7 +4,7 @@ from tenancy.models import Tenant
 from extras.models import CustomFieldChoiceSet
 from netaddr import IPNetwork
 from utilities.exceptions import AbortScript
-from dcim.models import Device, Interfaces
+from dcim.models import Device, Interface
 import string
 import random
 
@@ -57,7 +57,7 @@ class NewService(Script):
     )
     
     Interface=ObjectVar(
-        model = Interfaces,
+        model = Interface,
         label = "Interface",
         description = "Pick an interface to which this service should be bound",
         query_params = {
