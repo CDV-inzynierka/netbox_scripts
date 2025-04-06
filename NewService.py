@@ -128,6 +128,8 @@ class NewService(Script):
         try:
             interface.mode="access"
             interface.untagged_vlan=new_vlan
+            interface.description=Name+"_"+data["Client"]+"_"+ReservedPrefix+"_"+selected_bandwidth
+            interface.tag.set(['service-port'])
             interface.full_clean()
             interface.save()
             self.log_success(f"Successfully bound a VLAN to interface: {interface.name}, {interface.device}")
