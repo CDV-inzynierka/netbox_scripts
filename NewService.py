@@ -128,12 +128,13 @@ class NewService(Script):
         try:
             interface.mode="access"
             interface.untagged_vlan=new_vlan
-            interface.description=f"{Name}_{data['Client'].slug}_{ReservedPrefix}_{selected_bandwidth}"
+            interface.description=f"{Name}_{data['Client'].slug}_{ReservedPrefix.replace("/","_")}_{selected_bandwidth}"
             interface.full_clean()
             interface.save()
             self.log_success(f"Successfully bound a VLAN to interface: {interface.name}, {interface.device}")
         except Exception as e:
             raise AbortScript(f"An error occured during interface reservation: {str(e)}")
-        #tagging outside of try block
+        
+        #tagging outside of try block, most likely bug caused a problem with saving changes other than tag when tag was set in same save session
         interface.tags.set(['Service port'])
         interface.save()
