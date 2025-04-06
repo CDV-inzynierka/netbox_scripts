@@ -4,6 +4,7 @@ from tenancy.models import Tenant
 from extras.models import CustomFieldChoiceSet
 from netaddr import IPNetwork
 from utilities.exceptions import AbortScript
+from dcim.models import Devices, Interfaces
 import string
 import random
 
@@ -44,6 +45,24 @@ class NewService(Script):
     )
     Client = ObjectVar(
         model = Tenant
+    )
+
+    Switch=ObjectVar(
+        model=Devices,
+        description = "Pick a switch you would like add interface to. That field only helps you to filter services attached to this switch",
+        required = False,
+        query_param={
+            'role': 'Switch Leaf'
+        }
+    )
+    
+    Interface=ObjectVar(
+        model = Interfaces,
+        label = "Interface",
+        description = "Pick an interface to which this service should be bound",
+        query_params = {
+            'device': '$Switch'
+        }
     )
 
 
@@ -95,5 +114,6 @@ class NewService(Script):
             }
         )
         new_prefix.save()
-        
         self.log_success(f"Succesfully reserved a prefix: {ReservedPrefix}")
+
+        #interface reservation
