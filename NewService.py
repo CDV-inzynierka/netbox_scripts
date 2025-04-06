@@ -126,6 +126,7 @@ class NewService(Script):
             interface.snapshot()
         #modifying Netbox Interface object to assign it to vlan
         try:
+            interface.mode="access"
             interface.untagged_vlan=new_vlan
             interface.full_clean()
             interface.save()
