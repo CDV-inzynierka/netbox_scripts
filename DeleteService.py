@@ -38,7 +38,8 @@ class NewService(Script):
 
         try:
             deleted_vlan.delete()
-            self.log_success(f"Succesfully deleted a VLAN: {deleted_vlan.name} with ID: {str(deleted_vlan.id)}")
+            deleted_vlan_id=deleted_vlan.id
+            self.log_success(f"Succesfully deleted a VLAN: {deleted_vlan.name} with ID: {str(deleted_vlan_id)}")
         except Exception as e:
             raise AbortScript(f"An error occured during deleting a vlan: {str(e)}") # type: ignore
 
