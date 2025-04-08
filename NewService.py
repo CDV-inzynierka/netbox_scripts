@@ -1,5 +1,5 @@
 from extras.scripts import Script,ChoiceVar,ObjectVar
-from ipam.models import Prefix, Role, VLAN, VLANGroup
+from ipam.models import Prefix, Role, VLAN, VLANGroup,IPAddress
 from tenancy.models import Tenant
 from extras.models import CustomFieldChoiceSet
 from netaddr import IPNetwork
@@ -89,6 +89,9 @@ class NewService(Script):
         
         #constructing prefix to reservation
         ReservedPrefix.prefixlen=PrefixLengthFilter
+        #for descriptions usage
+        formatted_prefix=str(ReservedPrefix).replace("/","_")
+
         characters=string.ascii_uppercase+string.digits
         Name="".join(random.choices(characters, k=5))
         #creating Netbox VLAN object
@@ -118,9 +121,31 @@ class NewService(Script):
         )
         new_prefix.save()
         self.log_success(f"Succesfully reserved a prefix: {ReservedPrefix}")
+        #creating IP addresses for L3 interfaces on vSRX routers
+        vrrp_address=IPAddress(
+            address=new_prefix.get_first_available_ip(),
+            role="VRRP",
+            tenant=data["Client"],
+            description=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}"
+
+        )
+        RT0320_address=IPAddress(
+            address=new_prefix.get_first_available_ip(),
+            role="VRRP",
+            tenant=data["Client"],
+            description=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}"
+
+        )
+        RT0321_address=IPAddress(
+            address=new_prefix.get_first_available_ip(),
+            role="VRRP",
+            tenant=data["Client"],
+            description=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}"
+
+        )
 
         #interface reservation
-        
+
         #snapshot for data consistency and change logging
         if interface.pk and hasattr(Interface,'snapshot'):
             interface.snapshot()
@@ -128,7 +153,6 @@ class NewService(Script):
         try:
             interface.mode="access"
             interface.untagged_vlan=new_vlan
-            formatted_prefix=str(ReservedPrefix).replace("/","_")
             interface.description=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}"
             interface.full_clean()
             interface.save()

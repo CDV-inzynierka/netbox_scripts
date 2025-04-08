@@ -61,6 +61,7 @@ class NewService(Script):
         except Exception as e:
             raise AbortScript(f"Deleting service unsuccesful")
         
+        #tagging outside of try block, most likely bug caused a problem with saving changes other than tag when tag was set in same save session
         unset_interface.tags.set(['Free port'])
         unset_interface.save()
 
