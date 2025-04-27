@@ -121,6 +121,26 @@ class NewService(Script):
         )
         new_prefix.save()
         self.log_success(f"Succesfully reserved a prefix: {ReservedPrefix}")
+
+        #creating virtual interfaces for config render
+        RT0320_interface=Interface(
+            device=Device.objects.get(name="RT0320"),
+            name=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}_RT320",
+            type="virtual",
+            parent=Interface.object.get(tags=20),
+            mode='access',
+            untagged_vlan=new_vlan
+        )
+        RT0320_interface.save()
+        RT0321_interface=Interface(
+            device=Device.objects.get(name="RT0321"),
+            name=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}_RT321",
+            type="virtual",
+            parent=Interface.object.get(tags=21),
+            mode='access',
+            untagged_vlan=new_vlan
+        )
+        RT0321_interface.save()
         #creating IP addresses for L3 interfaces on vSRX routers
         vrrp_address=IPAddress(
             address=new_prefix.get_first_available_ip(),
