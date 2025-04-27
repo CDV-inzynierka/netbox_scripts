@@ -123,12 +123,11 @@ class NewService(Script):
         self.log_success(f"Succesfully reserved a prefix: {ReservedPrefix}")
         #creating IP addresses for L3 interfaces on vSRX routers
         vrrp_address=FHRPGroup(
-            protocol="VRRPv2",
-            address=new_prefix.get_first_available_ip(),
+            protocol="vrrpv2",
+            ip_addresses=new_prefix.get_first_available_ip(),
             group_id=new_vlan.vid,
-            tenant=data["Client"],
-            description=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}"
-
+            description=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}",
+            status="Active"
         )
         vrrp_address.save()
         RT0320_address=IPAddress(
