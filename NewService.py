@@ -129,6 +129,7 @@ class NewService(Script):
             description=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}"
 
         )
+        vrrp_address.save()
         RT0320_address=IPAddress(
             address=new_prefix.get_first_available_ip(),
             role="VRRP",
@@ -136,6 +137,7 @@ class NewService(Script):
             description=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}"
 
         )
+        RT0320_address.save()
         RT0321_address=IPAddress(
             address=new_prefix.get_first_available_ip(),
             role="VRRP",
@@ -143,6 +145,7 @@ class NewService(Script):
             description=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}"
 
         )
+        RT0321_address.save()
 
         #interface reservation
 
