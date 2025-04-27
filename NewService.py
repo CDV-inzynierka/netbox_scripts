@@ -1,5 +1,5 @@
 from extras.scripts import Script,ChoiceVar,ObjectVar
-from ipam.models import Prefix, Role, VLAN, VLANGroup, IPAddress, FHRPGroup
+from ipam.models import Prefix, Role, VLAN, VLANGroup,IPAddress
 from tenancy.models import Tenant
 from extras.models import CustomFieldChoiceSet
 from netaddr import IPNetwork
@@ -122,12 +122,12 @@ class NewService(Script):
         new_prefix.save()
         self.log_success(f"Succesfully reserved a prefix: {ReservedPrefix}")
         #creating IP addresses for L3 interfaces on vSRX routers
-        vrrp_address=FHRPGroup(
-            protocol="vrrpv2",
-            ip_addresses=new_prefix.get_first_available_ip(),
-            group_id=new_vlan.vid,
-            description=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}",
-            status="Active"
+        vrrp_address=IPAddress(
+            address=new_prefix.get_first_available_ip(),
+            role="VRRP",
+            tenant=data["Client"],
+            description=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}"
+
         )
         vrrp_address.save()
         RT0320_address=IPAddress(
