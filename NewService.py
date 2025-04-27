@@ -125,7 +125,7 @@ class NewService(Script):
         #creating virtual interfaces for config render
         RT0320_interface=Interface(
             device=Device.objects.get(name="RT0320"),
-            name=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}_RT320",
+            name=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}_RT0320",
             type="virtual",
             parent=Interface.objects.get(tags=20),
             mode='access',
@@ -134,7 +134,7 @@ class NewService(Script):
         RT0320_interface.save()
         RT0321_interface=Interface(
             device=Device.objects.get(name="RT0321"),
-            name=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}_RT321",
+            name=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}_RT0321",
             type="virtual",
             parent=Interface.objects.get(tags=21),
             mode='access',
@@ -153,15 +153,15 @@ class NewService(Script):
         RT0320_address=IPAddress(
             address=new_prefix.get_first_available_ip(),
             tenant=data["Client"],
-            description=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}"
-
+            description=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}",
+            interface=RT0321_interface
         )
         RT0320_address.save()
         RT0321_address=IPAddress(
             address=new_prefix.get_first_available_ip(),
             tenant=data["Client"],
-            description=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}"
-
+            description=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}",
+            interface=RT0321_interface
         )
         RT0321_address.save()
 
