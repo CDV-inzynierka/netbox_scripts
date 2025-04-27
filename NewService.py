@@ -127,7 +127,7 @@ class NewService(Script):
             device=Device.objects.get(name="RT0320"),
             name=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}_RT320",
             type="virtual",
-            parent=Interface.object.get(tags=20),
+            parent=Interface.objects.get(tags=20),
             mode='access',
             untagged_vlan=new_vlan
         )
@@ -136,7 +136,7 @@ class NewService(Script):
             device=Device.objects.get(name="RT0321"),
             name=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}_RT321",
             type="virtual",
-            parent=Interface.object.get(tags=21),
+            parent=Interface.objects.get(tags=21),
             mode='access',
             untagged_vlan=new_vlan
         )
