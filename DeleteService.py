@@ -31,7 +31,7 @@ class NewService(Script):
         
         deleted_prefix=data['Prefix']
         deleted_vlan=VLAN.objects.get(name=deleted_prefix.description)
-        unset_interface=Interface.objects.get(untagged_vlan=deleted_vlan)
+        unset_interface=Interface.objects.get(untagged_vlan=deleted_vlan, tags=2)
         try:
             try:
                 deleted_prefix.delete()
