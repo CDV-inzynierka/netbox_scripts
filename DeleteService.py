@@ -1,5 +1,5 @@
 from extras.scripts import Script,ObjectVar
-from ipam.models import Prefix, VLAN
+from ipam.models import Prefix, VLAN, IPAddress
 from tenancy.models import Tenant
 from utilities.exceptions import AbortScript
 from dcim.models import Interface, Device
@@ -32,9 +32,9 @@ class DeleteService(Script):
         deleted_prefix=data['Prefix']
         deleted_vlan=VLAN.objects.get(name=deleted_prefix.description)
         unset_interface=Interface.objects.get(untagged_vlan=deleted_vlan, tags=2)
+        vrrp_address=deleted_prefix.get_child_ips()[0]
         RT0320_object=Device.objects.get(name="RT0320")
         RT0321_object=Device.objects.get(name="RT0321")
-
         unset_rt0320_interface=Interface.objects.get(untagged_vlan=deleted_vlan, device=RT0320_object)
         unset_rt0321_interface=Interface.objects.get(untagged_vlan=deleted_vlan, device=RT0321_object)
         try:
@@ -57,6 +57,12 @@ class DeleteService(Script):
             except Exception as e:
                 raise AbortScript(f"An error occured during deleting a vlan: {str(e)}") 
             
+            try:
+                vrrp_address.delete()
+                self.log_success(f"Succesfully deleted a VRRP object: {vrrp_address.address}")
+            except Exception as e:
+                raise AbortScript(f"An error occured during deleting a vlan: {str(e)}") 
+
 
             try:
 
