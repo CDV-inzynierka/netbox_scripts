@@ -154,9 +154,9 @@ class NewService(Script):
             address=new_prefix.get_first_available_ip(),
             tenant=data["Client"],
             description=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}",
-            interface=RT0321_interface
         )
         RT0320_address.save()
+        RT0320_address.interface.set([RT0320_interface])
         RT0321_address=IPAddress(
             address=new_prefix.get_first_available_ip(),
             tenant=data["Client"],
