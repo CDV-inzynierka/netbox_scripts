@@ -162,8 +162,8 @@ class NewService(Script):
             address=new_prefix.get_first_available_ip(),
             tenant=data["Client"],
             description=f"{Name}_{data['Client'].slug}_{formatted_prefix}_{selected_bandwidth}",
-            interface=RT0321_interface
         )
+        RT0321_address.assigned_object=RT0321_interface
         RT0321_address.save()
 
         #interface reservation
