@@ -36,7 +36,7 @@ class DeleteService(Script):
         RT0321_object=Device.objects.get(name="RT0321")
 
         unset_rt0320_interface=Interface.objects.get(untagged_vlan=deleted_vlan, device=RT0320_object)
-        unset_rt0321_interface=Interface.objects.get(untagged_vlan=deleted_vlan, tags=RT0321_object)
+        unset_rt0321_interface=Interface.objects.get(untagged_vlan=deleted_vlan, device=RT0321_object)
         try:
             try:
                 deleted_prefix.delete()
