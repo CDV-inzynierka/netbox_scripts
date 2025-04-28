@@ -2,7 +2,7 @@ from extras.scripts import Script,ObjectVar
 from ipam.models import Prefix, VLAN
 from tenancy.models import Tenant
 from utilities.exceptions import AbortScript
-from dcim.models import Interface
+from dcim.models import Interface, Device
 
 class DeleteService(Script):
     class Meta:
@@ -32,18 +32,31 @@ class DeleteService(Script):
         deleted_prefix=data['Prefix']
         deleted_vlan=VLAN.objects.get(name=deleted_prefix.description)
         unset_interface=Interface.objects.get(untagged_vlan=deleted_vlan, tags=2)
+        RT0320_object=Device.objects.get(name="RT0320")
+        RT0321_object=Device.objects.get(name="RT0321")
+
+        unset_rt0320_interface=Interface.objects.get(untagged_vlan=deleted_vlan, device=RT0320_object)
+        unset_rt0321_interface=Interface.objects.get(untagged_vlan=deleted_vlan, tags=RT0321_object)
         try:
             try:
                 deleted_prefix.delete()
                 self.log_success(f"Succesfully deleted a prefix: {deleted_prefix.prefix}")
             except Exception as e:
                 raise AbortScript(f"An error occured during deleting a prefix: {str(e)}") 
+            
+            try:
+                unset_rt0320_interface.delete()
+                unset_rt0321_interface.delete()
+                self.log_success(f"Succesfully deleted Interfaces: {unset_rt0320_interface.name}, {unset_rt0320_interface.name}")
+            except Exception as e:
+                raise AbortScript(f"An error occured during deleting interfaces: {str(e)}") 
 
             try:
                 deleted_vlan.delete()
                 self.log_success(f"Succesfully deleted a VLAN: {deleted_vlan.name} with ID: {str(deleted_vlan.vid)}")
             except Exception as e:
                 raise AbortScript(f"An error occured during deleting a vlan: {str(e)}") 
+            
 
             try:
 
