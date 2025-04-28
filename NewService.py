@@ -141,6 +141,8 @@ class NewService(Script):
             untagged_vlan=new_vlan
         )
         RT0321_interface.save()
+        self.log_success(f"Successfully created Interface objects: {RT0321_interface.name}, {RT0320_interface.name}")
+
         #creating IP addresses for L3 interfaces on vSRX routers
         vrrp_address=IPAddress(
             address=new_prefix.get_first_available_ip(),
@@ -165,6 +167,7 @@ class NewService(Script):
         )
         RT0321_address.assigned_object=RT0321_interface
         RT0321_address.save()
+        self.log_success(f"Successfully created IP Address objects: {RT0320_address.address}, {RT0321_address.address}, together with VRRP address: {vrrp_address.address}")
 
         #interface reservation
 
