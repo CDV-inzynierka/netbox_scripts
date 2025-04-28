@@ -4,7 +4,7 @@ from tenancy.models import Tenant
 from utilities.exceptions import AbortScript
 from dcim.models import Interface
 
-class NewService(Script):
+class DeleteService(Script):
     class Meta:
         name = "Delete a service"
         description = "Deletes a service."
